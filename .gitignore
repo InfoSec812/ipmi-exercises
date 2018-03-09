@@ -1,0 +1,17 @@
+Doxyfile
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+cmake_install.cmake
+Makefile
+CMakeCache.txt
+html
+html/**
+latex
+latex/**
+cmake-build-debug
+cmake-build-debug/**
+CMakeFiles
+CMakeFiles/**
+.idea
+.idea/**
+**/*.iml
