@@ -1,15 +1,5 @@
-//
-// Created by dphillips on 3/2/18.
-//
-
-#ifndef INCLUDE_STRING_STL
-#define INCLUDE_STRING_STL
 #include <string>
 #include <sstream>
-#endif
-
-#ifndef IPMI_EXERCISES_HELLO_H
-#define IPMI_EXERCISES_HELLO_H
 
 using namespace std;
 
@@ -18,16 +8,22 @@ using namespace std;
  */
 class Hello {
     public:
+        /**
+         * Return the string "Hello world"
+         * @return A {@code string} containing "Hello world"
+         */
         string sayHello() {
             return "Hello world";
         }
 
+        /**
+         * Return a string containing "Hello " + the input string
+         * @param name A {@code string} to be appended to the "Hello " message
+         * @return A {@code string} containing "Hello " appended with the input string
+         */
         string sayHello(string name) {
             ostringstream stream;
             stream << "Hello " << name << endl;
             return stream.str();
         }
 };
-
-
-#endif //IPMI_EXERCISES_HELLO_H

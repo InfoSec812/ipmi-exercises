@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required (VERSION 2.8)
 project(ipmi_exercises)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -15,4 +15,18 @@ if(DOXYGEN_FOUND)
             )
 endif(DOXYGEN_FOUND)
 
-add_executable(ipmi_exercises main.cpp Hello.cpp Hello.h)
+set(VERSION "1.0.0")
+
+add_library(hello SHARED Hello.cpp Hello.h)
+
+set(CPACK_PACKAGE_VERSION ${VERSION})
+set(CPACK_GENERATOR "RPM")
+set(CPACK_PACKAGE_NAME "ipmi_exercises")
+set(CPACK_PACKAGE_RELEASE 1)
+set(CPACK_PACKAGE_CONTACT "Deven Phillips")
+set(CPACK_PACKAGE_VENDOR "Red Hat, Inc.")
+set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/ipmi-exercises.spec.in" "${CMAKE_CURRENT_BINARY_DIR}/ipmi-exercises.spec" @ONLY IMMEDIATE)
+set(CPACK_RPM_USER_BINARY_SPECFILE "${CMAKE_CURRENT_BINARY_DIR}/ipmi-exercises.spec")
+include(CPack)

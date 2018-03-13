@@ -1,0 +1,71 @@
+Source0: ipmi-exercises-%{version}.tar.gz
+
+Summary: A simple library to demonstrate multi-package RPM SPEC builds from source
+License: BSD 3-Clause License
+URL: https://github.com/InfoSec812/ipmi-exercises
+Group: Development/Libraries
+Name: ipmi
+Version: @CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@
+Release: 1
+
+%description
+This is an example project where I can experiment with CMake/CPACK/RPM/RPMSPEC in order to build
+different packages from a single cmake/make script setup.
+
+%package -n libhello
+Summary: The shared library build without headers
+License: BSD 3-Clause License
+URL: https://github.com/InfoSec812/ipmi-exercises
+Group: Development/Libraries
+BuildRequires: cmake gcc-g++ make rpmbuild
+BuildRequires: doxygen freeipmi freeipmi-devel
+
+%description -n libhello
+Runtime shared library for Hello class
+
+%prep
+cp -fr . %{_topdir}/SOURCES/ipmi-exercises-%{version}
+cp -fr . %{_topdir}/BUILD/ipmi-exercises-%{version}
+cd %{_topdir}/BUILD
+/usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
+
+%build
+cmake .
+make all doc
+
+%install -n libhello
+[ "$RPM_BUILD_ROOT" != '/' ] && rm -rf -- $RPM_BUILD_ROOT
+
+mkdir -p $RPM_BUILD_ROOT%{_usr}/lib
+install -pm 644 libhello.so $RPM_BUILD_ROOT%/{_usr}/lib/libhello.so
+ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@
+ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@
+ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@
+install -pm 644 man/man3/Hello.3 $RPM_BUILD_ROOT/%{_usr}/share/man/man3/Hello.3
+install -pm 644 Hello.h $RPM_BUILD_ROOT/%{_usr}/include/Hello.h
+
+%files -n libhello
+%defattr(-,root,root,-)
+%{_usr}/lib/libhello.so
+%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@
+%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@
+%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@
+%exclude %dir /usr
+%exclude %dir /usr/lib
+
+%package -n libhello-devel
+Summary: The development headers for libhello
+License: BSD 3-Clause License
+URL: https://github.com/InfoSec812/ipmi-exercises
+Group: Development/Libraries
+Requires: libhello
+BuildRequires: cmake gcc-g++ make rpmbuild
+BuildRequires: doxygen freeipmi freeipmi-devel
+
+%description -n libhello-devel
+Compile-time headers for Hello class
+
+%files -n libhello-devel
+%defattr(-,root,root,-)
+%{_usr}/share/man/man3/Hello.3
+%{_usr}/include/Hello.h
