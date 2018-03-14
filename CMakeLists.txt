@@ -2,6 +2,9 @@ cmake_minimum_required (VERSION 2.8)
 project(ipmi_exercises)
 
 set(CMAKE_CXX_STANDARD 11)
+set(PROJECT_VERSION_MAJOR 1)
+set(PROJECT_VERSION_MINOR 0)
+set(PROJECT_VERSION_PATCH 0)
 
 option(BUILD_DOC "Build documentation" ON)
 
