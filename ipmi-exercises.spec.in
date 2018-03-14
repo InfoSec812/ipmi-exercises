@@ -1,5 +1,3 @@
-Source0: ipmi-exercises-%{version}.tar.gz
-
 Summary: A simple library to demonstrate multi-package RPM SPEC builds from source
 License: BSD 3-Clause License
 URL: https://github.com/InfoSec812/ipmi-exercises
@@ -26,26 +24,34 @@ Runtime shared library for Hello class
 %prep
 pwd
 cd %{_topdir}/BUILD
+mkdir -p %{_topdir}/SOURCES/ipmi-exercises-%{version}
+mkdir -p %{_topdir}/BUILD/ipmi-exercises-%{version}
 rm -rf ipmi-exercises-%{version}
-cp -rf %{_topdir}/SOURCES/ipmi-exercises-%{version} .
+cp -rf %{_sourcedir} %{_topdir}/SOURCES/ipmi-exercises-%{version}
+cp -rf %{_sourcedir} %{_topdir}/BUILD/ipmi-exercises-%{version}
 cd ipmi-exercises-%{version}
 /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
 /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
 
 %build
+cd ipmi-exercises-%{version}
 cmake .
 make all doc
 
-%install -n libhello
+%install
 [ "$RPM_BUILD_ROOT" != '/' ] && rm -rf -- $RPM_BUILD_ROOT
 
 mkdir -p $RPM_BUILD_ROOT%{_usr}/lib
-install -pm 644 libhello.so $RPM_BUILD_ROOT%/{_usr}/lib/libhello.so
-ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@
-ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@
-ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
-install -pm 644 man/man3/Hello.3 $RPM_BUILD_ROOT/%{_usr}/share/man/man3/Hello.3
-install -pm 644 Hello.h $RPM_BUILD_ROOT/%{_usr}/include/Hello.h
+mkdir -p $RPM_BUILD_ROOT%{_usr}/share/man/man3
+mkdir -p $RPM_BUILD_ROOT%{_usr}/include
+cd ipmi-exercises-%{version}
+install -pm 644 ./libhello.so $RPM_BUILD_ROOT%{_usr}/lib/libhello.so
+install -pm 644 man/man3/Hello.3 $RPM_BUILD_ROOT%{_usr}/share/man/man3/Hello.3
+install -pm 644 Hello.h $RPM_BUILD_ROOT%{_usr}/include/Hello.h
+cd $RPM_BUILD_ROOT%{_usr}/lib
+ln -s libhello.so libhello.so.@PROJECT_VERSION_MAJOR@
+ln -s libhello.so libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@
+ln -s libhello.so libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
 
 %files -n libhello
 %defattr(-,root,root,-)
@@ -70,5 +76,5 @@ Compile-time headers for Hello class
 
 %files -n libhello-devel
 %defattr(-,root,root,-)
-%{_usr}/share/man/man3/Hello.3
+%{_usr}/share/man/man3/Hello.3.gz
 %{_usr}/include/Hello.h
