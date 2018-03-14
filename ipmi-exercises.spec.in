@@ -25,8 +25,8 @@ Runtime shared library for Hello class
 
 %prep
 rm -rf %{_topdir}/SOURCES/ipmi-exercises-%{version}
-cp -fr * %{_topdir}/SOURCES/ipmi-exercises-%{version}
-cp -fr * %{_topdir}/BUILD/ipmi-exercises-%{version}
+cp -fr ./ %{_topdir}/SOURCES/ipmi-exercises-%{version}
+cp -fr ./ %{_topdir}/BUILD/ipmi-exercises-%{version}
 cd %{_topdir}/BUILD
 /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
 
