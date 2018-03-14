@@ -59,7 +59,7 @@ License: BSD 3-Clause License
 URL: https://github.com/InfoSec812/ipmi-exercises
 Group: Development/Libraries
 Requires: libhello
-BuildRequires: cmake gcc-g++ make rpmbuild
+BuildRequires: cmake gcc-c++ make rpmbuild
 BuildRequires: doxygen freeipmi freeipmi-devel
 
 %description -n libhello-devel
