@@ -24,6 +24,7 @@ BuildRequires: doxygen freeipmi freeipmi-devel
 Runtime shared library for Hello class
 
 %prep
+pwd
 cd %{_topdir}/BUILD
 rm -rf ipmi-exercises-%{version}
 cp -rf %{_topdir}/SOURCES/ipmi-exercises-%{version} .
