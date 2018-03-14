@@ -5,7 +5,7 @@ License: BSD 3-Clause License
 URL: https://github.com/InfoSec812/ipmi-exercises
 Group: Development/Libraries
 Name: ipmi
-Version: @CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@
+Version: @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
 Release: 1
 
 %description
@@ -17,7 +17,7 @@ Summary: The shared library build without headers
 License: BSD 3-Clause License
 URL: https://github.com/InfoSec812/ipmi-exercises
 Group: Development/Libraries
-BuildRequires: cmake gcc-g++ make rpmbuild
+BuildRequires: cmake gcc-c++ make rpmbuild
 BuildRequires: doxygen freeipmi freeipmi-devel
 
 %description -n libhello
@@ -38,18 +38,18 @@ make all doc
 
 mkdir -p $RPM_BUILD_ROOT%{_usr}/lib
 install -pm 644 libhello.so $RPM_BUILD_ROOT%/{_usr}/lib/libhello.so
-ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@
-ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@
-ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@
+ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@
+ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@
+ln -s $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so $RPM_BUILD_ROOT/%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
 install -pm 644 man/man3/Hello.3 $RPM_BUILD_ROOT/%{_usr}/share/man/man3/Hello.3
 install -pm 644 Hello.h $RPM_BUILD_ROOT/%{_usr}/include/Hello.h
 
 %files -n libhello
 %defattr(-,root,root,-)
 %{_usr}/lib/libhello.so
-%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@
-%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@
-%{_usr}/lib/libhello.so.@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@
+%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@
+%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@
+%{_usr}/lib/libhello.so.@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
 %exclude %dir /usr
 %exclude %dir /usr/lib
 
