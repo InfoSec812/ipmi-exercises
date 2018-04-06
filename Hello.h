@@ -18,8 +18,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -45,5 +47,15 @@ class Hello {
             ostringstream stream;
             stream << "Hello " << name << endl;
             return stream.str();
+        }
+
+        void sayHelloLots() {
+            vector<string> strings = vector<string>();
+            for (int x=0; x<40; x++) {
+                strings.push_back("Hello");
+            }
+            for (string item: strings) {
+                cout << item << "\n";
+            }
         }
 };
