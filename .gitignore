@@ -37,3 +37,5 @@ CPackSourceConfig.cmake
 install_manifest.txt
 .vscode
 .vscode/**
+.scannerwork
+.scannerwork/**
